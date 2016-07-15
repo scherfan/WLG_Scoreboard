@@ -4,15 +4,11 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 
-int away_score;
-int home_score;
 
 Controls::Controls(QWidget *parent) : QMainWindow(parent), ui(new Ui::Controls)
 {
     ui->setupUi(this);
     createActions();
-    home_score = 0;
-    away_score = 0;
 }
 
 Controls::~Controls()
@@ -30,7 +26,6 @@ void Controls::createActions()
 
     connect(ui->editHomeTeamAct, &QAction::triggered, this, &Controls::get_HomeTeamName);
     connect(ui->editAwayTeamAct, &QAction::triggered, this, &Controls::get_AwayTeamName);
-    //    connect(ui->
 }
 
 

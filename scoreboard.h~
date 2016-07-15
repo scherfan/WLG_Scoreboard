@@ -19,9 +19,7 @@ public:
 public slots:
     void change_home(QString name);
     void change_away(QString name);
-    void change_home_score(int amount);
-    void change_away_score(int amount);
-    
+
 private slots:
     void showTime();
 
