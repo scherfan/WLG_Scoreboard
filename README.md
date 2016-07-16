@@ -5,7 +5,7 @@ To do
 -----
 
 1. ~~Make clock work~~
-1. Connect score buttons on controls
+1. ~~Connect score buttons on controls~~
 1. Assign keybindings to score buttons
 1. Connect time/clock controls to scoreboard
 1. Make score text boxes changes appear on scoreboard

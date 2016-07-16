@@ -14,7 +14,8 @@ Scoreboard::Scoreboard(QWidget *parent) : QWidget(parent), ui(new Ui::Scoreboard
 
     ui->setupUi(this);
     QTimer *timer = new QTimer(this);
-    time_value = 551380;
+    ui->clock->display("0:00:00");
+    time_value = 0;
     connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
     timer->start(1000);
 

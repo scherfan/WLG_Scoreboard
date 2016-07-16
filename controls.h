@@ -20,9 +20,13 @@ public:
     ~Controls();
 
 signals:
-    void home_changed(QString name);
-    void away_changed(QString name);
+    void home_score_changed(QString name);
+    void away_score_changed(QString name);
 
+private slots:
+    void update_home_score(int num);
+    void update_away_score(int num);
+    
 private:
     Ui::Controls *ui;
     void createActions();

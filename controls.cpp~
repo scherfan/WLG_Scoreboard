@@ -4,17 +4,19 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 
-int away_score_value;
-int home_score_value;
+int ctrls_away_score_value;
+int ctrls_home_score_value;
 
 Controls::Controls(QWidget *parent) : QMainWindow(parent), ui(new Ui::Controls)
 {
     ui->setupUi(this);
     createActions();
-    home_score_value = 0;
-    away_score_value = 0;
-    ui->home_score->setText(QString::number((home_score_value));
-    ui->away_score->setText(away_score_value);
+    
+    // If file doesn't exist then init score values, else load last score
+    ctrls_home_score_value = 10001;
+    ctrls_away_score_value = 10000;
+    ui->home_score->setText(QString::number(ctrls_home_score_value));
+    ui->away_score->setText(QString::number(ctrls_away_score_value));
 }
 
 Controls::~Controls()
@@ -32,7 +34,13 @@ void Controls::createActions()
 
     connect(ui->editHomeTeamAct, &QAction::triggered, this, &Controls::get_HomeTeamName);
     connect(ui->editAwayTeamAct, &QAction::triggered, this, &Controls::get_AwayTeamName);
-    //    connect(ui->
+    
+    // connect(ui->home_plus1_button, &QAbstractButton::clicked, this, SLOT(update_home_score(1)));
+    //connect(ui->home_minus1_button, &QAbstractButton::clicked, this, SLOT(update_home_score(-1)));
+    //connect(ui->home_plus2_button, &QAbstractButton::clicked, this, SLOT(update_home_score(2)));
+    //connect(ui->home_minus2_button, &QAbstractButton::clicked, this, SLOT(update_home_score(-2)));
+    //connect(ui->home_plus3_button, &QAbstractButton::clicked, this, SLOT(update_home_score(3)));
+    connect(ui->home_minus3_button, &QAbstractButton::clicked, this, &Controls::update_home_score(-3)));
 }
 
 
@@ -57,7 +65,7 @@ void Controls::get_HomeTeamName()
     if(ok && !name.isEmpty())
         ui->home_label->setText(name);
 
-    emit home_changed(name);
+    emit home_score_changed(name);
 }
 
 void Controls::get_AwayTeamName()
@@ -69,7 +77,43 @@ void Controls::get_AwayTeamName()
     if(ok && !name.isEmpty())
         ui->away_label->setText(name);
 
-    emit away_changed(name);
+    emit away_score_changed(name);
+}
+
+void Controls::update_home_score(int num)
+{
+    ctrls_home_score_value += num;
+    ui->home_score->setText(QString::number(ctrls_home_score_value));
+}
+
+void Controls::update_home_minusone()
+{
+    ctrls_home_score_value--;
+    ui->home_score->setText(QString::number(ctrls_home_score_value));
+}
+
+void Controls::update_home_plustwo()
+{
+    ctrls_home_score_value += 2;
+    ui->home_score->setText(QString::number(ctrls_home_score_value));
+}
+
+void Controls::update_home_minustwo()
+{
+    ctrls_home_score_value -= 2;
+    ui->home_score->setText(QString::number(ctrls_home_score_value));
+}
+
+void Controls::update_home_plusthree()
+{
+    ctrls_home_score_value += 3;
+    ui->home_score->setText(QString::number(ctrls_home_score_value));
+}
+
+void Controls::update_home_minusthree()
+{
+    ctrls_home_score_value -= 3;
+    ui->home_score->setText(QString::number(ctrls_home_score_value));
 }
 
 void Controls::sb_fullscreen()
