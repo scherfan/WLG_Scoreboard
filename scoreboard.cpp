@@ -14,7 +14,7 @@ Scoreboard::Scoreboard(QWidget *parent) : QWidget(parent), ui(new Ui::Scoreboard
 
     ui->setupUi(this);
     QTimer *timer = new QTimer(this);
-    time_value = 0;
+    time_value = 551380;
     connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
     timer->start(1000);
 
@@ -34,9 +34,22 @@ void Scoreboard::showTime()
 {
     time_value++;
     int hour = (time_value / 60) / 60;
-    int minute = time_value / 60;
-    int second = time_value;
-    QString time_text = QString::number(hour) + ":" + QString::number(minute) + ":" + QString::number(second);
+    int minute = (time_value / 60) % 60;
+    int second = time_value % 60;
+
+    QString min_text, sec_text;
+    
+    if(minute < 10)
+	min_text = "0" + QString::number(minute);
+    else
+	min_text = QString::number(minute);
+
+    if(second < 10)
+	sec_text = "0" + QString::number(second);
+    else
+	sec_text = QString::number(second);
+    
+    QString time_text = QString::number(hour) + ":" + min_text + ":" + sec_text;
     ui->clock->display(time_text);
 }
 
