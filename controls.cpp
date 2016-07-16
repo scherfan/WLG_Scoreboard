@@ -4,15 +4,19 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 
-int away_score;
-int home_score;
+int ctrls_away_score_value;
+int ctrls_home_score_value;
 
 Controls::Controls(QWidget *parent) : QMainWindow(parent), ui(new Ui::Controls)
 {
     ui->setupUi(this);
     createActions();
-    home_score = 0;
-    away_score = 0;
+    
+    // If file doesn't exist then init score values, else load last score
+    ctrls_home_score_value = 0;
+    ctrls_away_score_value = 0;
+    ui->home_score->setText(QString::number(ctrls_home_score_value));
+    ui->away_score->setText(QString::number(ctrls_away_score_value));
 }
 
 Controls::~Controls()

@@ -1,22 +1,26 @@
 #include "scoreboard.h"
 #include "ui_scoreboard.h"
 #include <QTimer>
-#include <QDateTime>
 #include <QDebug>
 #include <QCloseEvent>
 #include <string>
 
 int away_score_value;
 int home_score_value;
+int time_value;
 
 Scoreboard::Scoreboard(QWidget *parent) : QWidget(parent), ui(new Ui::Scoreboard)
 {
-    home_score_value = 0;
-    away_score_value = 0;
+
     ui->setupUi(this);
     QTimer *timer = new QTimer(this);
+    time_value = 0;
     connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
-    timer->start();
+    timer->start(1000);
+
+    // If file doesn't exist then init score, else load last score
+    home_score_value = 0;
+    away_score_value = 0;
     ui->home_lcd->display(QString::number(home_score_value));
     ui->away_lcd->display(QString::number(away_score_value));
 }
@@ -28,16 +32,12 @@ Scoreboard::~Scoreboard()
 
 void Scoreboard::showTime()
 {
-    QTime timeValue = QTime(0,0,0);
-    QString time_text;
-    for(int i = 0; i < 5; i++)
-    {
-        timeValue.addSecs(1);
-        qDebug() << timeValue;
-        time_text = timeValue.toString("hh:mm:ss");
-        time_text = "999:99:99";
-        ui->clock->display(time_text);
-    }
+    time_value++;
+    int hour = (time_value / 60) / 60;
+    int minute = time_value / 60;
+    int second = time_value;
+    QString time_text = QString::number(hour) + ":" + QString::number(minute) + ":" + QString::number(second);
+    ui->clock->display(time_text);
 }
 
 void Scoreboard::change_home(QString name)
