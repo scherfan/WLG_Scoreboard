@@ -4,7 +4,7 @@ WLG_Scoreboard
 To do
 -----
 
-1. Make clock work
+1. Make clock work *complete*
 1. Connect score buttons on controls
 1. Assign keybindings to score buttons
 1. Connect time/clock controls to scoreboard
