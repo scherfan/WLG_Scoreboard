@@ -78,7 +78,7 @@ void Controls::get_HomeTeamName()
                                          QLineEdit::Normal, 0, &ok);
 
     if(ok && !name.isEmpty())
-        ui->home_label->setText(name);
+        ui->home_label->setText(name + " score");
 
     emit home_name_changed(name);
 }
@@ -90,7 +90,7 @@ void Controls::get_AwayTeamName()
                                          QLineEdit::Normal, 0, &ok);
 
     if(ok && !name.isEmpty())
-        ui->away_label->setText(name);
+        ui->away_label->setText(name + " score");
 
     emit away_name_changed(name);
 }
