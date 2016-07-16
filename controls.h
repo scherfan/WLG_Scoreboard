@@ -22,10 +22,14 @@ public:
 signals:
     void home_name_changed(QString name);
     void away_name_changed(QString name);
+    void home_score_changed(int amount);
+    void away_score_changed(int amount);
 
 private slots:
     void update_home_score(int num);
     void update_away_score(int num);
+    void change_home_board_score();
+    void change_away_board_score();
     
 private:
     Ui::Controls *ui;

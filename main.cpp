@@ -8,10 +8,10 @@ int main(int argc, char *argv[])
     Controls w;
     Scoreboard s;
 
-    QObject::connect(&w, SIGNAL(home_name_changed(QString)), &s, SLOT(change_home(QString)));
-    QObject::connect(&w, SIGNAL(away_name_changed(QString)), &s, SLOT(change_away(QString)));
-    //QObject::connect(&w, SIGNAL(away_score_change(amount)), &s, SLOT(change_away_score(amount)));
-    //QObject::connect(&w, SIGNAL(home_score_change(amount)), &s, SLOT(change_home_score(amount)));
+    QObject::connect(&w, SIGNAL(home_name_changed(QString)), &s, SLOT(change_home_name(QString)));
+    QObject::connect(&w, SIGNAL(away_name_changed(QString)), &s, SLOT(change_away_name(QString)));
+    QObject::connect(&w, SIGNAL(away_score_changed(int)), &s, SLOT(change_away_score(int)));
+    QObject::connect(&w, SIGNAL(home_score_changed(int)), &s, SLOT(change_home_score(int)));
 
     w.show();
     s.show();

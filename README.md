@@ -6,6 +6,10 @@ To do
 
 1. ~~Make clock work~~
 1. ~~Connect score buttons on controls~~
+1. ~~Make score edit lines into labels~~
+1. When team name is changed, the label in the edit menu for corrisponding team is changed
+   to match
+1. Create a way for a message box to change score values
 1. Assign keybindings to score buttons
 1. Connect time/clock controls to scoreboard
 1. Make score text boxes changes appear on scoreboard

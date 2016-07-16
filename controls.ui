@@ -72,7 +72,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit"/>
+       <widget class="QLabel" name="clock">
+        <property name="text">
+         <string>0:00:00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -135,15 +142,9 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QLineEdit" name="home_score">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
+         <widget class="QLabel" name="home_score">
+          <property name="text">
+           <string>0</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -167,12 +168,9 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLineEdit" name="away_score">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+         <widget class="QLabel" name="away_score">
+          <property name="text">
+           <string>0</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -341,9 +339,13 @@
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="editHomeTeamAct"/>
+    <addaction name="action_Edit_Time"/>
     <addaction name="separator"/>
+    <addaction name="editHomeTeamAct"/>
     <addaction name="editAwayTeamAct"/>
+    <addaction name="separator"/>
+    <addaction name="action_Edit_Home_Team_Score"/>
+    <addaction name="action_Edit_Away_Team_Score"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
@@ -384,6 +386,21 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="action_Edit_Home_Team_Score">
+   <property name="text">
+    <string>&amp;Edit Home Team Score</string>
+   </property>
+  </action>
+  <action name="action_Edit_Away_Team_Score">
+   <property name="text">
+    <string>&amp;Edit Away Team Score</string>
+   </property>
+  </action>
+  <action name="action_Edit_Time">
+   <property name="text">
+    <string>&amp;Edit Clock</string>
    </property>
   </action>
  </widget>

@@ -54,12 +54,12 @@ void Scoreboard::showTime()
     ui->clock->display(time_text);
 }
 
-void Scoreboard::change_home(QString name)
+void Scoreboard::change_home_name(QString name)
 {
     ui->home_label->setText(name);
 }
 
-void Scoreboard::change_away(QString name)
+void Scoreboard::change_away_name(QString name)
 {
     ui->away_label->setText(name);
 }

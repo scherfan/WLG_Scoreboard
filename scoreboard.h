@@ -17,8 +17,8 @@ public:
     ~Scoreboard();
 
 public slots:
-    void change_home(QString name);
-    void change_away(QString name);
+    void change_home_name(QString name);
+    void change_away_name(QString name);
     void change_home_score(int amount);
     void change_away_score(int amount);
     
