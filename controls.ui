@@ -63,6 +63,11 @@
       </property>
       <item>
        <widget class="QLabel" name="time_label">
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Time</string>
         </property>
@@ -73,6 +78,11 @@
       </item>
       <item>
        <widget class="QLabel" name="clock">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>0:00:00</string>
         </property>
@@ -119,6 +129,11 @@
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QLabel" name="home_label">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Home Score</string>
           </property>
@@ -129,6 +144,11 @@
         </item>
         <item>
          <widget class="QLabel" name="away_label">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Away Score</string>
           </property>
@@ -143,6 +163,11 @@
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <widget class="QLabel" name="home_score">
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>0</string>
           </property>
@@ -169,6 +194,11 @@
         </item>
         <item>
          <widget class="QLabel" name="away_score">
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>0</string>
           </property>

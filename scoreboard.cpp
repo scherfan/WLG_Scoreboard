@@ -49,6 +49,8 @@ void Scoreboard::showTime()
     
     QString time_text = QString::number(hour) + ":" + min_text + ":" + sec_text;
     ui->clock->display(time_text);
+    
+    emit update_clock(time_text);
 }
 
 void Scoreboard::change_home_name(QString name)

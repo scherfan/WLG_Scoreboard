@@ -140,3 +140,8 @@ void Controls::sb_fullscreen()
 {
 
 }
+
+void Controls::clock_label_updated(QString time)
+{
+    ui->clock->setText(time);
+}

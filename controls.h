@@ -27,6 +27,9 @@ signals:
     void clock_started();
     void clock_stopped();
 
+public slots:
+    void clock_label_updated(QString);
+
 private slots:
     void update_home_score(int num);
     void update_away_score(int num);
