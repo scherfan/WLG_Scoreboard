@@ -1,4 +1,5 @@
 WLG_Scoreboard is a basketball scoreboard program to allow for triple digit hours and 5 digit scores.
+
 Copyright (C) 2016 Steven Cherfan
 
 This program is free software: you can redistribute it and/or modify
