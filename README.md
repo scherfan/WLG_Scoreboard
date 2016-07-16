@@ -19,6 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 WLG_Scoreboard
 ==============
 
+This is a basketball scoreboard program for the Windows platform. It is designed for use in a game that attempts to break the Guinness World Record for longest basketball game. As a result it allows for 3 digit hours and 5 digit scores.
+
+The team names are customizable and it is designed to eliminate mistakes due to user fatigue like clicking the exit button by accident or pressing stop on the clock. It also will make a log of the time and score in case of a crash or program failure, etc. Ideally it is made to be setup with a laptop and TV monitor to display the scoreboard.
+
 To do
 -----
 
