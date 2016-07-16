@@ -53,6 +53,8 @@ void Controls::createActions()
     connect(ui->away_plus3_button, &QAbstractButton::clicked, this, [this]{update_away_score(3);});
     connect(ui->away_minus3_button, &QAbstractButton::clicked, this, [this]{update_away_score(-3);});
 
+    connect(ui->clock_start, &QAbstractButton::clicked, this, &Controls::start_clock);
+    connect(ui->clock_stop, &QAbstractButton::clicked, this, &Controls::stop_clock);
     
 }
 
@@ -123,9 +125,16 @@ void Controls::change_away_board_score()
 {
     emit away_score_changed(ctrls_away_score_value);
 }
-/**
- **/
 
+void Controls::start_clock()
+{
+    emit clock_started();
+}
+
+void Controls::stop_clock()
+{
+    emit clock_stopped();
+}
 
 void Controls::sb_fullscreen()
 {

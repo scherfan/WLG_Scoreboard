@@ -3,7 +3,6 @@
 #include <QTimer>
 #include <QDebug>
 #include <QCloseEvent>
-#include <string>
 
 int away_score_value;
 int home_score_value;
@@ -13,12 +12,10 @@ Scoreboard::Scoreboard(QWidget *parent) : QWidget(parent), ui(new Ui::Scoreboard
 {
 
     ui->setupUi(this);
-    QTimer *timer = new QTimer(this);
     ui->clock->display("0:00:00");
     time_value = 0;
+    timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
-    timer->start(1000);
-
     // If file doesn't exist then init score, else load last score
     home_score_value = 0;
     away_score_value = 0;
@@ -77,4 +74,14 @@ void Scoreboard::change_away_score(int amount)
 void Scoreboard::closeEvent(QCloseEvent *event)
 {
     event->ignore();
+}
+
+void Scoreboard::start_clock()
+{
+    timer->start(1000);
+}
+
+void Scoreboard::stop_clock()
+{
+    timer->stop();
 }

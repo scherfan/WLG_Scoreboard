@@ -11,7 +11,8 @@ class Scoreboard;
 class Scoreboard : public QWidget
 {
     Q_OBJECT
-
+    QTimer *timer;
+    
 public:
     explicit Scoreboard(QWidget *parent = 0);
     ~Scoreboard();
@@ -21,6 +22,8 @@ public slots:
     void change_away_name(QString name);
     void change_home_score(int amount);
     void change_away_score(int amount);
+    void start_clock();
+    void stop_clock();
     
 private slots:
     void showTime();

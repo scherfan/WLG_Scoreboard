@@ -24,12 +24,16 @@ signals:
     void away_name_changed(QString name);
     void home_score_changed(int amount);
     void away_score_changed(int amount);
+    void clock_started();
+    void clock_stopped();
 
 private slots:
     void update_home_score(int num);
     void update_away_score(int num);
     void change_home_board_score();
     void change_away_board_score();
+    void start_clock();
+    void stop_clock();
     
 private:
     Ui::Controls *ui;
