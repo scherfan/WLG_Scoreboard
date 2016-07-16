@@ -72,7 +72,7 @@ void Controls::get_HomeTeamName()
     if(ok && !name.isEmpty())
         ui->home_label->setText(name);
 
-    emit home_score_changed(name);
+    emit home_name_changed(name);
 }
 
 void Controls::get_AwayTeamName()
@@ -84,7 +84,7 @@ void Controls::get_AwayTeamName()
     if(ok && !name.isEmpty())
         ui->away_label->setText(name);
 
-    emit away_score_changed(name);
+    emit away_name_changed(name);
 }
 
 void Controls::update_home_score(int num)

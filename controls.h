@@ -20,8 +20,8 @@ public:
     ~Controls();
 
 signals:
-    void home_score_changed(QString name);
-    void away_score_changed(QString name);
+    void home_name_changed(QString name);
+    void away_name_changed(QString name);
 
 private slots:
     void update_home_score(int num);
