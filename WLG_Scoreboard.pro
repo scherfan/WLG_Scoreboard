@@ -11,6 +11,8 @@ TARGET = WLG_Scoreboard
 INCLUDEPATH += .
 
 # Input
-HEADERS += controls.h scoreboard.h
+HEADERS += controls.h scoreboard.h \
+    app.h
 FORMS += controls.ui scoreboard.ui
-SOURCES += controls.cpp main.cpp scoreboard.cpp
+SOURCES += controls.cpp main.cpp scoreboard.cpp \
+    app.cpp

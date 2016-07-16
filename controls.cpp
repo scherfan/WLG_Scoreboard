@@ -12,7 +12,7 @@ Controls::Controls(QWidget *parent) : QMainWindow(parent), ui(new Ui::Controls)
 {
     ui->setupUi(this);
     createActions();
-    
+
     // If file doesn't exist then init score values, else load last score
     ctrls_home_score_value = 0;
     ctrls_away_score_value = 0;
@@ -30,8 +30,8 @@ void Controls::createActions()
     ui->exitAct->setStatusTip(tr("Exit the application"));
     connect(ui->exitAct, &QAction::triggered, this, &Controls::close);
 
-    //    ui->fullAct->setStatusTip(tr("Make Scoreboard full screen"));
-    //    connect(ui->fullAct, &QAction::triggered, this, &Controls::sb_fullscreen);
+    ui->fullAct->setStatusTip(tr("Make Scoreboard full screen"));
+    connect(ui->fullAct, &QAction::triggered, this, &Controls::sb_fullscreen);
 
     connect(ui->editHomeTeamAct, &QAction::triggered, this, &Controls::get_HomeTeamName);
     connect(ui->editAwayTeamAct, &QAction::triggered, this, &Controls::get_AwayTeamName);
@@ -78,7 +78,7 @@ void Controls::get_HomeTeamName()
                                          QLineEdit::Normal, 0, &ok);
 
     if(ok && !name.isEmpty())
-        ui->home_label->setText(name + " score");
+        ui->home_label->setText(name + " Score");
 
     emit home_name_changed(name);
 }
@@ -90,7 +90,7 @@ void Controls::get_AwayTeamName()
                                          QLineEdit::Normal, 0, &ok);
 
     if(ok && !name.isEmpty())
-        ui->away_label->setText(name + " score");
+        ui->away_label->setText(name + " Score");
 
     emit away_name_changed(name);
 }
@@ -138,10 +138,11 @@ void Controls::stop_clock()
 
 void Controls::sb_fullscreen()
 {
-
+    
 }
 
 void Controls::clock_label_updated(QString time)
 {
     ui->clock->setText(time);
 }
+
