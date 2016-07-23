@@ -25,6 +25,7 @@
 
 int ctrls_away_score_value;
 int ctrls_home_score_value;
+bool clock_running;
 
 Controls::Controls(QWidget *parent) : QMainWindow(parent), ui(new Ui::Controls)
 {
@@ -34,6 +35,8 @@ Controls::Controls(QWidget *parent) : QMainWindow(parent), ui(new Ui::Controls)
     // If file doesn't exist then init score values, else load last score
     ctrls_home_score_value = 0;
     ctrls_away_score_value = 0;
+    clock_running = false;
+    ui->clock_stop->setEnabled(false);
     ui->home_score->setText(QString::number(ctrls_home_score_value));
     ui->away_score->setText(QString::number(ctrls_away_score_value));
 }
@@ -146,17 +149,29 @@ void Controls::change_away_board_score()
 
 void Controls::start_clock()
 {
-    emit clock_started();
+    if(clock_running == false)
+    {
+        emit clock_started();
+        clock_running = true;
+	ui->clock_start->setEnabled(false);
+	ui->clock_stop->setEnabled(true);
+    }
 }
 
 void Controls::stop_clock()
 {
-    emit clock_stopped();
+    if(clock_running == true)
+    {
+        emit clock_stopped();
+        clock_running = false;
+	ui->clock_start->setEnabled(true);
+	ui->clock_stop->setEnabled(false);
+    }
 }
 
 void Controls::sb_fullscreen()
 {
-    
+    emit make_sb_fullscreen();
 }
 
 void Controls::clock_label_updated(QString time)

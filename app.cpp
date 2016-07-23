@@ -35,10 +35,17 @@ int App::run(int argc, char** argv)
     QObject::connect(&c, SIGNAL(clock_stopped()), &s, SLOT(stop_clock()));
     QObject::connect(&c, SIGNAL(clock_started()), &s, SLOT(start_clock()));
     QObject::connect(&s, SIGNAL(update_clock(QString)), &c, SLOT(clock_label_updated(QString)));
-
+    QObject::connect(&c, SIGNAL(make_sb_fullscreen()), this, SLOT(sb_fullscreen(Scoreboard s)));
     c.show();
     s.show();
-    //s.showFullScreen();
+
+
 
     return a.exec();
 }
+
+/*void App::sb_fullscreen(Scoreboard s)
+{
+    s.showFullScreen();
+}
+*/

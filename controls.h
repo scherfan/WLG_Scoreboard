@@ -45,6 +45,7 @@ signals:
     void away_score_changed(int amount);
     void clock_started();
     void clock_stopped();
+    void make_sb_fullscreen();
 
 public slots:
     void clock_label_updated(QString);

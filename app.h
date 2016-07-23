@@ -20,6 +20,8 @@
 #define APP_H
 
 #include <QObject>
+#include "scoreboard.h"
+
 
 class App : public QObject
 {
@@ -27,6 +29,9 @@ class App : public QObject
 
 public:
     int run(int argc, char** argv);
+
+public slots:
+//    void sb_fullscreen(Scoreboard s);
 };
 
 #endif // APP_H
