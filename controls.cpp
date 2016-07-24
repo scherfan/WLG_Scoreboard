@@ -48,18 +48,29 @@ Controls::~Controls()
 
 void Controls::createActions()
 {
+    // Exit application menu action
     ui->exitAct->setStatusTip(tr("Exit the application"));
     connect(ui->exitAct, &QAction::triggered, this, &Controls::close);
 
+    // Make scoreboard fullscreen menu
     ui->fullAct->setStatusTip(tr("Make Scoreboard full screen"));
     connect(ui->fullAct, &QAction::triggered, this, &Controls::sb_fullscreen);
 
+    // Set time menu
+    ui->action_edit_time->setStatusTip(tr("Set current time"));
+    connect(ui->action_edit_time, &QAction::triggered, this, &Controls::edit_clock);
+
+    // Set team names menu
     connect(ui->editHomeTeamAct, &QAction::triggered, this, &Controls::get_HomeTeamName);
     connect(ui->editAwayTeamAct, &QAction::triggered, this, &Controls::get_AwayTeamName);
-    
-    // connect(ui->home_score, &QLineEdit::textChanged, this, &Controls::change_home_board_score);
-    //connect(ui->away_score, &QLineEdit::textChanged, this, &Controls::change_away_board_score);
 
+    // Set team scores menu
+    ui->action_edit_home_team_score->setStatusTip(tr("Set home team score"));
+    connect(ui->action_edit_home_team_score, &QAction::triggered, this, &Controls::edit_home_score);
+    ui->action_edit_away_team_score->setStatusTip(tr("Set away team score"));
+    connect(ui->action_edit_away_team_score, &QAction::triggered, this, &Controls::edit_away_score);
+
+    // connect score buttons
     connect(ui->home_plus1_button, &QAbstractButton::clicked, this, [this]{update_home_score(1);});
     connect(ui->home_minus1_button, &QAbstractButton::clicked, this, [this]{update_home_score(-1);});
     connect(ui->home_plus2_button, &QAbstractButton::clicked, this, [this]{update_home_score(2);});
@@ -179,3 +190,40 @@ void Controls::clock_label_updated(QString time)
     ui->clock->setText(time);
 }
 
+void Controls::edit_clock()
+{
+    bool ok;
+    QString time_string = QInputDialog::getText(this, tr("Set new clock time"), tr("Time:"),
+                                         QLineEdit::Normal, 0, &ok);
+
+//    if(ok && !time_string.isEmpty())
+	
+}
+
+void Controls::edit_home_score()
+{
+    bool ok;
+    QString score = QInputDialog::getText(this, tr("Set new home score"), tr("Score:"),
+                                         QLineEdit::Normal, 0, &ok);
+
+    if(ok && !score.isEmpty())
+    {
+	ctrls_home_score_value = score.toInt();
+	ui->home_score->setText(QString::number(ctrls_home_score_value));
+	emit home_score_changed(ctrls_home_score_value);
+    }
+}
+
+void Controls::edit_away_score()
+{
+    bool ok;
+    QString score = QInputDialog::getText(this, tr("Set new away score"), tr("Score:"),
+                                         QLineEdit::Normal, 0, &ok);
+
+    if(ok && !score.isEmpty())
+    {
+	ctrls_away_score_value = score.toInt();
+	ui->away_score->setText(QString::number(ctrls_away_score_value));
+	emit away_score_changed(ctrls_away_score_value);
+    }
+}

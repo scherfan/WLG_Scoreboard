@@ -65,6 +65,9 @@ private:
     void get_AwayTeamName();
     void closeEvent(QCloseEvent *event);
     void sb_fullscreen();
+    void edit_clock();
+    void edit_home_score();
+    void edit_away_score();
 
     QMenu *fileMenu;
     QMenu *editMEnu;

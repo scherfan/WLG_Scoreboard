@@ -369,13 +369,13 @@
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="action_Edit_Time"/>
+    <addaction name="action_edit_time"/>
     <addaction name="separator"/>
     <addaction name="editHomeTeamAct"/>
     <addaction name="editAwayTeamAct"/>
     <addaction name="separator"/>
-    <addaction name="action_Edit_Home_Team_Score"/>
-    <addaction name="action_Edit_Away_Team_Score"/>
+    <addaction name="action_edit_home_team_score"/>
+    <addaction name="action_edit_away_team_score"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
@@ -418,17 +418,17 @@
     <string>Ctrl+F</string>
    </property>
   </action>
-  <action name="action_Edit_Home_Team_Score">
+  <action name="action_edit_home_team_score">
    <property name="text">
     <string>&amp;Edit Home Team Score</string>
    </property>
   </action>
-  <action name="action_Edit_Away_Team_Score">
+  <action name="action_edit_away_team_score">
    <property name="text">
     <string>&amp;Edit Away Team Score</string>
    </property>
   </action>
-  <action name="action_Edit_Time">
+  <action name="action_edit_time">
    <property name="text">
     <string>&amp;Edit Clock</string>
    </property>
