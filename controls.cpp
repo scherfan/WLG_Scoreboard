@@ -22,6 +22,7 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QDebug>
+#include <QShortcut>
 
 int ctrls_away_score_value;
 int ctrls_home_score_value;
@@ -85,9 +86,52 @@ void Controls::createActions()
     connect(ui->away_plus3_button, &QAbstractButton::clicked, this, [this]{update_away_score(3);});
     connect(ui->away_minus3_button, &QAbstractButton::clicked, this, [this]{update_away_score(-3);});
 
+    // connect clock buttons
     connect(ui->clock_start, &QAbstractButton::clicked, this, &Controls::start_clock);
     connect(ui->clock_stop, &QAbstractButton::clicked, this, &Controls::stop_clock);
-    
+
+    // connect score keyboard short cuts
+    QShortcut *home_plus_one = new QShortcut(this);
+    QShortcut *home_minus_one = new QShortcut(this);
+    home_plus_one->setKey(Qt::Key_Q);
+    home_minus_one->setKey(Qt::Key_A);
+    QShortcut *home_plus_two = new QShortcut(this);
+    QShortcut *home_minus_two = new QShortcut(this);
+    home_plus_two->setKey(Qt::Key_W);
+    home_minus_two->setKey(Qt::Key_S);
+    QShortcut *home_plus_three = new QShortcut(this);
+    QShortcut *home_minus_three = new QShortcut(this);
+    home_plus_three->setKey(Qt::Key_E);
+    home_minus_three->setKey(Qt::Key_D);
+
+    QShortcut *away_plus_one = new QShortcut(this);
+    QShortcut *away_minus_one = new QShortcut(this);
+    away_plus_one->setKey(Qt::Key_U);
+    away_minus_one->setKey(Qt::Key_J);
+    QShortcut *away_plus_two = new QShortcut(this);
+    QShortcut *away_minus_two = new QShortcut(this);
+    away_plus_two->setKey(Qt::Key_I);
+    away_minus_two->setKey(Qt::Key_K);
+    QShortcut *away_plus_three = new QShortcut(this);
+    QShortcut *away_minus_three = new QShortcut(this);
+    away_plus_three->setKey(Qt::Key_O);
+    away_minus_three->setKey(Qt::Key_L);
+
+
+    connect(home_plus_one, &QShortcut::activated, this, [this]{update_home_score(1);});
+    connect(home_minus_one, &QShortcut::activated, this, [this]{update_home_score(-1);});
+    connect(home_plus_two, &QShortcut::activated, this, [this]{update_home_score(2);});
+    connect(home_minus_two, &QShortcut::activated, this, [this]{update_home_score(-2);});
+    connect(home_plus_three, &QShortcut::activated, this, [this]{update_home_score(3);});
+    connect(home_minus_three, &QShortcut::activated, this, [this]{update_home_score(-3);});
+
+    connect(away_plus_one, &QShortcut::activated, this, [this]{update_away_score(1);});
+    connect(away_minus_one, &QShortcut::activated, this, [this]{update_away_score(-1);});
+    connect(away_plus_two, &QShortcut::activated, this, [this]{update_away_score(2);});
+    connect(away_minus_two, &QShortcut::activated, this, [this]{update_away_score(-2);});
+    connect(away_plus_three, &QShortcut::activated, this, [this]{update_away_score(3);});
+    connect(away_minus_three, &QShortcut::activated, this, [this]{update_away_score(-3);});
+
 }
 
 
@@ -129,6 +173,7 @@ void Controls::get_AwayTeamName()
 
 void Controls::update_home_score(int num)
 {
+    qDebug() << "updated home score by: " << num;
     ctrls_home_score_value += num;
     if(ctrls_home_score_value < 0)
 	ctrls_home_score_value = 0;

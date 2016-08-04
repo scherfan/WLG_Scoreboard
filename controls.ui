@@ -391,7 +391,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="exitAct">
    <property name="text">
-    <string>E&amp;xit</string>
+    <string>Exit</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
@@ -402,17 +402,17 @@
   </action>
   <action name="editHomeTeamAct">
    <property name="text">
-    <string>&amp;Edit Home Team Name</string>
+    <string>Edit Home Team Name</string>
    </property>
   </action>
   <action name="editAwayTeamAct">
    <property name="text">
-    <string>&amp;Edit AwayTeam Name</string>
+    <string>Edit AwayTeam Name</string>
    </property>
   </action>
   <action name="fullAct">
    <property name="text">
-    <string>F&amp;ull Screen</string>
+    <string>Full Screen</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
@@ -420,17 +420,17 @@
   </action>
   <action name="action_edit_home_team_score">
    <property name="text">
-    <string>&amp;Edit Home Team Score</string>
+    <string>Edit Home Team Score</string>
    </property>
   </action>
   <action name="action_edit_away_team_score">
    <property name="text">
-    <string>&amp;Edit Away Team Score</string>
+    <string>Edit Away Team Score</string>
    </property>
   </action>
   <action name="action_edit_time">
    <property name="text">
-    <string>&amp;Edit Clock</string>
+    <string>Edit Clock</string>
    </property>
   </action>
  </widget>
