@@ -260,8 +260,11 @@ void Controls::edit_clock()
 	    int total = (hour * 60 * 60) + (min * 60) + sec;
 	    emit change_time(total);
 	}
+	else
+	    QMessageBox::information(this, tr("Invalid time"), tr("Invalid time entered."));
     }
-	
+    else
+	QMessageBox::information(this, tr("Invalid time"), tr("Invalid time entered."));
 }
 
 void Controls::edit_home_score()
