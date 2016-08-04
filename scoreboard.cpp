@@ -105,3 +105,28 @@ void Scoreboard::stop_clock()
 {
     timer->stop();
 }
+
+void Scoreboard::set_time_value(int time)
+{
+    time_value = time;
+    int second, minute, hour;
+    hour = (time_value / 60) / 60;
+    minute = (time_value / 60) % 60;
+    second = time_value % 60;
+    QString min_text, sec_text;
+    
+    if(minute < 10)
+	min_text = "0" + QString::number(minute);
+    else
+	min_text = QString::number(minute);
+
+    if(second < 10)
+	sec_text = "0" + QString::number(second);
+    else
+	sec_text = QString::number(second);
+    
+    QString time_text = QString::number(hour) + ":" + min_text + ":" + sec_text;
+    ui->clock->display(time_text);
+    
+    emit update_clock(time_text);
+}

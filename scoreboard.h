@@ -45,6 +45,7 @@ public slots:
     void change_away_score(int amount);
     void start_clock();
     void stop_clock();
+    void set_time_value(int time);
     
 private slots:
     void showTime();

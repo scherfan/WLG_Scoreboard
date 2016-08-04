@@ -36,6 +36,7 @@ int App::run(int argc, char** argv)
     
     QObject::connect(&c, SIGNAL(clock_stopped()), &s, SLOT(stop_clock()));
     QObject::connect(&c, SIGNAL(clock_started()), &s, SLOT(start_clock()));
+    QObject::connect(&c, SIGNAL(change_time(int)), &s, SLOT(set_time_value(int)));
     QObject::connect(&s, SIGNAL(update_clock(QString)), &c, SLOT(clock_label_updated(QString)));
     QObject::connect(&c, SIGNAL(make_sb_fullscreen()), this, SLOT(sb_fullscreen(Scoreboard s)));
     c.show();

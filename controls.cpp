@@ -17,6 +17,7 @@
 **/
 
 #include "controls.h"
+#include "scoreboard.h"
 #include "ui_controls.h"
 #include <QInputDialog>
 #include <QMessageBox>
@@ -244,10 +245,22 @@ void Controls::clock_label_updated(QString time)
 void Controls::edit_clock()
 {
     bool ok;
-    QString time_string = QInputDialog::getText(this, tr("Set new clock time"), tr("Time:"),
+    int hour, min, sec;
+    QString time_string = QInputDialog::getText(this, tr("Set new clock time"), tr("Time (hhh:mm:ss): "),
                                          QLineEdit::Normal, 0, &ok);
 
-//    if(ok && !time_string.isEmpty())
+    if(ok && !time_string.isEmpty() && clock_running == false)
+    {
+	QStringList time_pieces = time_string.split(":", QString::SkipEmptyParts);
+	hour = time_pieces.value(0).toInt();
+	min = time_pieces.value(1).toInt();
+	sec = time_pieces.value(2).toInt();
+	if(hour < 1000 && min < 60 && sec < 60)
+	{
+	    int total = (hour * 60 * 60) + (min * 60) + sec;
+	    emit change_time(total);
+	}
+    }
 	
 }
 

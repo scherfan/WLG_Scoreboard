@@ -46,6 +46,7 @@ signals:
     void clock_started();
     void clock_stopped();
     void make_sb_fullscreen();
+    void change_time(int time);
 
 public slots:
     void clock_label_updated(QString);
