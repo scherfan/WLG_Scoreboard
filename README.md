@@ -35,7 +35,7 @@ To do
 1. ~~Disable start button after start~~
 1. ~~Create a way for a message box to change score values~~
 1. ~~Clock is stoppable only through popup after started~~
+1. ~~Assign keybindings to score buttons~~
 1. Make time editable through menu and a message box
-1. Assign keybindings to score buttons
 1. Make changes persistant by saving time and score into a file every second
 1. Make scoreboard full screen after clicking menu option or Ctrl-F
