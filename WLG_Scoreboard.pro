@@ -12,7 +12,9 @@ INCLUDEPATH += .
 
 # Input
 HEADERS += controls.h scoreboard.h \
-    app.h
+    app.h \
+    filemanagement.h
 FORMS += controls.ui scoreboard.ui
 SOURCES += controls.cpp main.cpp scoreboard.cpp \
-    app.cpp
+    app.cpp \
+    filemanagement.cpp
