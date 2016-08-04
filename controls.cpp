@@ -173,10 +173,16 @@ void Controls::stop_clock()
 {
     if(clock_running == true)
     {
-        emit clock_stopped();
-        clock_running = false;
-	ui->clock_start->setEnabled(true);
-	ui->clock_stop->setEnabled(false);
+	QMessageBox::StandardButton reply;
+	reply = QMessageBox::question(this, tr("Stop the Clock"),
+				      "Are you sure you want to stop the clock?\nIs the game over?", QMessageBox::Yes | QMessageBox::Cancel);
+	if(reply == QMessageBox::Yes)
+	{
+	    emit clock_stopped();
+	    clock_running = false;
+	    ui->clock_start->setEnabled(true);
+	    ui->clock_stop->setEnabled(false);
+	}
     }
 }
 
