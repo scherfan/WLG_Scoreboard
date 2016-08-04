@@ -24,10 +24,12 @@
 #include <QCloseEvent>
 #include <QDebug>
 #include <QShortcut>
+#include <QTimer>
 
 int ctrls_away_score_value;
 int ctrls_home_score_value;
 bool clock_running;
+int time_value;
 
 Controls::Controls(QWidget *parent) : QMainWindow(parent), ui(new Ui::Controls)
 {
@@ -37,6 +39,9 @@ Controls::Controls(QWidget *parent) : QMainWindow(parent), ui(new Ui::Controls)
     // If file doesn't exist then init score values, else load last score
     ctrls_home_score_value = 0;
     ctrls_away_score_value = 0;
+    time_value = 0;
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(show_time()));
     clock_running = false;
     ui->clock_stop->setEnabled(false);
     ui->home_score->setText(QString::number(ctrls_home_score_value));
@@ -135,6 +140,31 @@ void Controls::createActions()
 
 }
 
+void Controls::show_time()
+{
+    time_value++;
+    
+    int hour = (time_value / 60) / 60;
+    int minute = (time_value / 60) % 60;
+    int second = time_value % 60;
+
+    QString min_text, sec_text;
+    
+    if(minute < 10)
+	min_text = "0" + QString::number(minute);
+    else
+	min_text = QString::number(minute);
+
+    if(second < 10)
+	sec_text = "0" + QString::number(second);
+    else
+	sec_text = QString::number(second);
+    
+    QString time_text = QString::number(hour) + ":" + min_text + ":" + sec_text;
+    
+    emit update_clock(time_text);
+    clock_label_updated(time_text);
+}
 
 void Controls::closeEvent(QCloseEvent *event)
 {
@@ -208,7 +238,7 @@ void Controls::start_clock()
 {
     if(clock_running == false)
     {
-        emit clock_started();
+	timer->start(1000);
         clock_running = true;
 	ui->clock_start->setEnabled(false);
 	ui->clock_stop->setEnabled(true);
@@ -221,10 +251,11 @@ void Controls::stop_clock()
     {
 	QMessageBox::StandardButton reply;
 	reply = QMessageBox::question(this, tr("Stop the Clock"),
-				      "Are you sure you want to stop the clock?\nIs the game over?", QMessageBox::Yes | QMessageBox::Cancel);
+				      "Are you sure you want to stop the clock?\nIs the game over?",
+				      QMessageBox::Yes | QMessageBox::Cancel);
 	if(reply == QMessageBox::Yes)
 	{
-	    emit clock_stopped();
+	    timer->stop();
 	    clock_running = false;
 	    ui->clock_start->setEnabled(true);
 	    ui->clock_stop->setEnabled(false);
@@ -244,27 +275,51 @@ void Controls::clock_label_updated(QString time)
 
 void Controls::edit_clock()
 {
-    bool ok;
     int hour, min, sec;
-    QString time_string = QInputDialog::getText(this, tr("Set new clock time"), tr("Time (hhh:mm:ss): "),
-                                         QLineEdit::Normal, 0, &ok);
-
-    if(ok && !time_string.isEmpty() && clock_running == false)
+    QString time_string;
+    if(clock_running == false)
     {
-	QStringList time_pieces = time_string.split(":", QString::SkipEmptyParts);
-	hour = time_pieces.value(0).toInt();
-	min = time_pieces.value(1).toInt();
-	sec = time_pieces.value(2).toInt();
-	if(hour < 1000 && min < 60 && sec < 60)
+	bool ok;
+	time_string = QInputDialog::getText(this, tr("Set new clock time"), tr("Time (hhh:mm:ss): "),
+			      QLineEdit::Normal, 0, &ok);
+
+	if(ok && !time_string.isEmpty())
 	{
-	    int total = (hour * 60 * 60) + (min * 60) + sec;
-	    emit change_time(total);
+	    QStringList time_pieces = time_string.split(":", QString::SkipEmptyParts);
+	    hour = time_pieces.value(0).toInt();
+	    min = time_pieces.value(1).toInt();
+	    sec = time_pieces.value(2).toInt();
+
+	    if(hour < 1000 && min < 60 && sec < 60)
+	    {
+		QString min_text, sec_text;
+    
+		if(min < 10)
+		    min_text = "0" + QString::number(min);
+		else
+		    min_text = QString::number(min);
+
+		if(sec < 10)
+		    sec_text = "0" + QString::number(sec);
+		else
+		    sec_text = QString::number(sec);
+    
+		QString time_text = QString::number(hour) + ":" + min_text + ":" + sec_text;
+    
+		emit update_clock(time_text);
+		clock_label_updated(time_text);
+	    
+		int total = (hour * 60 * 60) + (min * 60) + sec;
+		time_value = total;
+	    }
+	    else
+		QMessageBox::information(this, tr("Invalid time"), tr("Invalid time entered."));
 	}
 	else
 	    QMessageBox::information(this, tr("Invalid time"), tr("Invalid time entered."));
     }
     else
-	QMessageBox::information(this, tr("Invalid time"), tr("Invalid time entered."));
+	QMessageBox::information(this, tr("Running Time"), tr("Stop the clock before changing."));
 }
 
 void Controls::edit_home_score()

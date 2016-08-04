@@ -20,7 +20,6 @@
 #define SCOREBOARD_H
 
 #include <QWidget>
-#include <QTime>
 
 namespace Ui {
 class Scoreboard;
@@ -29,7 +28,6 @@ class Scoreboard;
 class Scoreboard : public QWidget
 {
     Q_OBJECT
-    QTimer *timer;
     
 public:
     explicit Scoreboard(QWidget *parent = 0);
@@ -43,13 +41,8 @@ public slots:
     void change_away_name(QString name);
     void change_home_score(int amount);
     void change_away_score(int amount);
-    void start_clock();
-    void stop_clock();
-    void set_time_value(int time);
+    void set_time_value(QString time);
     
-private slots:
-    void showTime();
-
 private:
     Ui::Scoreboard *ui;
     void closeEvent(QCloseEvent *event);

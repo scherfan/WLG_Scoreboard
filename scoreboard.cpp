@@ -18,22 +18,17 @@
 
 #include "scoreboard.h"
 #include "ui_scoreboard.h"
-#include <QTimer>
 #include <QDebug>
 #include <QCloseEvent>
 
 int away_score_value;
 int home_score_value;
-int time_value;
 
 Scoreboard::Scoreboard(QWidget *parent) : QWidget(parent), ui(new Ui::Scoreboard)
 {
 
     ui->setupUi(this);
     ui->clock->display("0:00:00");
-    time_value = 0;
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
     // If file doesn't exist then init score, else load last score
     home_score_value = 0;
     away_score_value = 0;
@@ -44,31 +39,6 @@ Scoreboard::Scoreboard(QWidget *parent) : QWidget(parent), ui(new Ui::Scoreboard
 Scoreboard::~Scoreboard()
 {
     delete ui;
-}
-
-void Scoreboard::showTime()
-{
-    time_value++;
-    int hour = (time_value / 60) / 60;
-    int minute = (time_value / 60) % 60;
-    int second = time_value % 60;
-
-    QString min_text, sec_text;
-    
-    if(minute < 10)
-	min_text = "0" + QString::number(minute);
-    else
-	min_text = QString::number(minute);
-
-    if(second < 10)
-	sec_text = "0" + QString::number(second);
-    else
-	sec_text = QString::number(second);
-    
-    QString time_text = QString::number(hour) + ":" + min_text + ":" + sec_text;
-    ui->clock->display(time_text);
-    
-    emit update_clock(time_text);
 }
 
 void Scoreboard::change_home_name(QString name)
@@ -96,37 +66,7 @@ void Scoreboard::closeEvent(QCloseEvent *event)
     event->ignore();
 }
 
-void Scoreboard::start_clock()
+void Scoreboard::set_time_value(QString time)
 {
-    timer->start(1000);
-}
-
-void Scoreboard::stop_clock()
-{
-    timer->stop();
-}
-
-void Scoreboard::set_time_value(int time)
-{
-    time_value = time;
-    int second, minute, hour;
-    hour = (time_value / 60) / 60;
-    minute = (time_value / 60) % 60;
-    second = time_value % 60;
-    QString min_text, sec_text;
-    
-    if(minute < 10)
-	min_text = "0" + QString::number(minute);
-    else
-	min_text = QString::number(minute);
-
-    if(second < 10)
-	sec_text = "0" + QString::number(second);
-    else
-	sec_text = QString::number(second);
-    
-    QString time_text = QString::number(hour) + ":" + min_text + ":" + sec_text;
-    ui->clock->display(time_text);
-    
-    emit update_clock(time_text);
+    ui->clock->display(time);
 }

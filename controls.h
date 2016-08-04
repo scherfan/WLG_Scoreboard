@@ -21,6 +21,7 @@
 #define CONTROLS_H
 
 #include <QMainWindow>
+#include <QTime>
 
 namespace Ui
 {
@@ -33,7 +34,7 @@ class QMenu;
 class Controls : public QMainWindow
 {
     Q_OBJECT
-
+    QTimer *timer;
 public:
     explicit Controls(QWidget *parent = 0);
     ~Controls();
@@ -43,21 +44,16 @@ signals:
     void away_name_changed(QString name);
     void home_score_changed(int amount);
     void away_score_changed(int amount);
-    void clock_started();
-    void clock_stopped();
     void make_sb_fullscreen();
     void change_time(int time);
-
-public slots:
-    void clock_label_updated(QString);
+    void update_clock(QString time);
 
 private slots:
     void update_home_score(int num);
     void update_away_score(int num);
     void change_home_board_score();
     void change_away_board_score();
-    void start_clock();
-    void stop_clock();
+    void show_time();
     
 private:
     Ui::Controls *ui;
@@ -69,6 +65,9 @@ private:
     void edit_clock();
     void edit_home_score();
     void edit_away_score();
+    void clock_label_updated(QString);
+    void start_clock();
+    void stop_clock();
 
     QMenu *fileMenu;
     QMenu *editMEnu;
