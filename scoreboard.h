@@ -34,7 +34,7 @@ public:
     ~Scoreboard();
 
 signals:
-    void update_clock(QString);
+    //void update_clock(QString);
     
 public slots:
     void change_home_name(QString name);

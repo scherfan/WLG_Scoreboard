@@ -25,27 +25,75 @@
 #include <QDebug>
 #include <QShortcut>
 #include <QTimer>
+#include <QFile>
 
 int ctrls_away_score_value;
 int ctrls_home_score_value;
+QString home_team, away_team;
 bool clock_running;
 int time_value;
+QString filename = "WLG_2016_history.txt";
 
 Controls::Controls(QWidget *parent) : QMainWindow(parent), ui(new Ui::Controls)
 {
     ui->setupUi(this);
-    createActions();
 
-    // If file doesn't exist then init score values, else load last score
-    ctrls_home_score_value = 0;
-    ctrls_away_score_value = 0;
-    time_value = 0;
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(show_time()));
     clock_running = false;
     ui->clock_stop->setEnabled(false);
-    ui->home_score->setText(QString::number(ctrls_home_score_value));
-    ui->away_score->setText(QString::number(ctrls_away_score_value));
+
+    QFile file(filename);
+    if(!file.exists())
+    {
+	qDebug() << "Doesn't exist.";
+	ctrls_home_score_value = 0;
+	ctrls_away_score_value = 0;
+	time_value = 0;
+	ui->home_score->setText(QString::number(ctrls_home_score_value));
+	ui->away_score->setText(QString::number(ctrls_away_score_value));
+    }
+    else    // If file doesn't exist then init score values, else load last score
+    {
+	qDebug() << "Exists.";
+	if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+	    fprintf(stderr, "File IO error");
+	    exit(-1);
+	}
+	QTextStream in(&file);
+	QStringList list, last_line;
+	while(!in.atEnd())
+	{
+	    QString line = in.readLine();
+	    list.append(line);
+	}
+	file.close();
+	
+	last_line = (list.value(list.length() - 1).split(",", QString::SkipEmptyParts));
+	time_value = last_line.value(0).toInt();
+	ctrls_home_score_value = last_line.value(2).toInt();
+	ctrls_away_score_value = last_line.value(4).toInt();
+	home_team = last_line.value(1);
+	away_team = last_line.value(3);
+	
+	QString time_update;
+	int hour = (time_value / 60) / 60;
+	int minute = (time_value / 60) % 60;
+	int second = time_value % 60;
+	time_update = QString::number(hour) + ":" + QString::number(minute) + ":" + QString::number(second);
+//	emit update_clock(time_text);
+	clock_label_updated(time_update);
+	ui->home_score->setText(QString::number(ctrls_home_score_value));
+	ui->away_score->setText(QString::number(ctrls_away_score_value));
+	ui->home_label->setText(home_team + " Score");
+	ui->away_label->setText(away_team + " Score");
+//	emit home_name_changed(home_team);
+//	emit away_name_changed(away_team);
+//	emit home_score_changed(ctrls_home_score_value);
+//	emit away_score_changed(ctrls_away_score_value);
+    }
+    createActions();
 }
 
 Controls::~Controls()
@@ -214,6 +262,7 @@ void Controls::update_home_score(int num)
 
 void Controls::update_away_score(int num)
 {
+    qDebug() << "updated away score by: " << num;
     ctrls_away_score_value += num;
     if(ctrls_away_score_value < 0)
 	ctrls_away_score_value = 0;
