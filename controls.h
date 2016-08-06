@@ -74,6 +74,7 @@ private:
     void stop_clock();
     void change_home_board_score(int num);
     void change_away_board_score(int num);
+    void save_to_file();
 
     QMenu *fileMenu;
     QMenu *editMEnu;

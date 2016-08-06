@@ -24,9 +24,6 @@
 #include "scoreboard.h"
 #include "app.h"
 
-
-QString filename = "WLG_2016_history.txt";
-
 int App::run(int argc, char** argv)
 {
     QApplication a(argc, argv);
@@ -88,11 +85,20 @@ int App::run(int argc, char** argv)
 	QString home_team = last_line.value(1);
 	QString away_team = last_line.value(3);
 	
-	QString time_update;
+	QString time_update, min_text, sec_text;
 	int hour = (time_value / 60) / 60;
 	int minute = (time_value / 60) % 60;
 	int second = time_value % 60;
-	time_update = QString::number(hour) + ":" + QString::number(minute) + ":" + QString::number(second);
+	if(minute < 10)
+	    min_text = "0" + QString::number(minute);
+	else
+	    min_text = QString::number(minute);
+	if(second < 10)
+	    sec_text = "0" + QString::number(second);
+	else
+	    sec_text = QString::number(second);
+	
+	time_update = QString::number(hour) + ":" + min_text + ":" + sec_text;
 	emit update_clock(time_update);
 	emit change_home_score(home_score_value);
 	emit change_away_score(away_score_value);
@@ -108,13 +114,7 @@ int App::run(int argc, char** argv)
     
     c.show();
     s.show();
-
-    //if(FileManagement::check_exists())
-    //qDebug() << "exists";
-    //else
-    //qDebug() << "doesn't exist";
-
-
+    
     return a.exec();
 }
 

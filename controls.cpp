@@ -19,6 +19,7 @@
 #include "controls.h"
 #include "scoreboard.h"
 #include "ui_controls.h"
+#include "app.h"
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QCloseEvent>
@@ -29,9 +30,11 @@
 
 int ctrls_away_score_value;
 int ctrls_home_score_value;
-QString home_team, away_team;
+QString home_team = "Home";
+QString away_team = "Away";
 bool clock_running;
 int time_value;
+
 
 Controls::Controls(QWidget *parent) : QMainWindow(parent), ui(new Ui::Controls)
 {
@@ -164,6 +167,9 @@ void Controls::show_time()
     
     emit update_clock(time_text);
     clock_label_updated(time_text);
+
+    //save to file
+    save_to_file();
 }
 
 void Controls::closeEvent(QCloseEvent *event)
@@ -185,9 +191,14 @@ void Controls::get_HomeTeamName()
                                          QLineEdit::Normal, 0, &ok);
 
     if(ok && !name.isEmpty())
+    {
+	home_team = name;
         ui->home_label->setText(name + " Score");
+	emit home_name_changed(name);
+	save_to_file();
+    }
 
-    emit home_name_changed(name);
+
 }
 
 void Controls::get_AwayTeamName()
@@ -197,9 +208,12 @@ void Controls::get_AwayTeamName()
                                          QLineEdit::Normal, 0, &ok);
 
     if(ok && !name.isEmpty())
+    {
+	away_team = name;
         ui->away_label->setText(name + " Score");
-
-    emit away_name_changed(name);
+	emit away_name_changed(name);
+	save_to_file();
+    }
 }
 
 void Controls::change_home_board_score(int num)
@@ -315,6 +329,8 @@ void Controls::edit_clock()
 	    
 		int total = (hour * 60 * 60) + (min * 60) + sec;
 		time_value = total;
+
+		save_to_file();
 	    }
 	    else
 		QMessageBox::information(this, tr("Invalid time"), tr("Invalid time entered."));
@@ -337,6 +353,7 @@ void Controls::edit_home_score()
 	ctrls_home_score_value = score.toInt();
 	ui->home_score->setText(QString::number(ctrls_home_score_value));
 	emit home_score_changed(ctrls_home_score_value);
+	save_to_file();
     }
 }
 
@@ -351,6 +368,7 @@ void Controls::edit_away_score()
 	ctrls_away_score_value = score.toInt();
 	ui->away_score->setText(QString::number(ctrls_away_score_value));
 	emit away_score_changed(ctrls_away_score_value);
+	save_to_file();
     }
 }
 
@@ -366,10 +384,32 @@ void Controls::update_time_label(QString time)
 
 void Controls::update_away_label(QString name)
 {
-    ui->away_label->setText(name);
+    QStringList list = name.split(" ");
+    qDebug() << list.value(0);
+    away_team = list.value(0);
+    ui->away_label->setText(away_team);
 }
 
 void Controls::update_home_label(QString name)
 {
-    ui->home_label->setText(name);
+    QStringList list = name.split(" ");
+    qDebug() << list.value(0);
+    home_team = list.value(0);
+    ui->home_label->setText(home_team);
+}
+
+
+void Controls::save_to_file()
+{
+    // save to file
+    QFile file(filename);
+    if(!file.open(QIODevice::Append | QIODevice::Text))
+    {
+	fprintf(stderr, "File IO error");
+	exit(-1);
+    }
+
+    QTextStream out(&file);
+    out << time_value << "," << home_team  + "," << ctrls_home_score_value << "," << away_team + "," << ctrls_away_score_value << "\n";
+    file.close();
 }

@@ -21,7 +21,9 @@
 
 #include <QObject>
 #include "scoreboard.h"
+#include <QString>
 
+const QString filename = "WLG_2016_history.txt";
 
 class App : public QObject
 {
