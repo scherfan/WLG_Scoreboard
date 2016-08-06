@@ -49,11 +49,15 @@ signals:
     void update_clock(QString time);
 
 private slots:
+    void show_time();
+
+public slots:
+    void update_time_label(QString time);
+    void update_home_label(QString name);
+    void update_away_label(QString name);
     void update_home_score(int num);
     void update_away_score(int num);
-    void change_home_board_score();
-    void change_away_board_score();
-    void show_time();
+
     
 private:
     Ui::Controls *ui;
@@ -68,6 +72,8 @@ private:
     void clock_label_updated(QString);
     void start_clock();
     void stop_clock();
+    void change_home_board_score(int num);
+    void change_away_board_score(int num);
 
     QMenu *fileMenu;
     QMenu *editMEnu;

@@ -201,7 +201,11 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0">
        <item>
-        <widget class="QLCDNumber" name="home_lcd"/>
+        <widget class="QLCDNumber" name="home_lcd">
+         <property name="digitCount">
+          <number>7</number>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="horizontalSpacer">
@@ -220,7 +224,11 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLCDNumber" name="away_lcd"/>
+        <widget class="QLCDNumber" name="away_lcd">
+         <property name="digitCount">
+          <number>7</number>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

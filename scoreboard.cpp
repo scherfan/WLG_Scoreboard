@@ -30,8 +30,8 @@ Scoreboard::Scoreboard(QWidget *parent) : QWidget(parent), ui(new Ui::Scoreboard
     ui->setupUi(this);
     ui->clock->display("0:00:00");
     // If file doesn't exist then init score, else load last score
-    home_score_value = 664136;
-    away_score_value = 663908;
+    home_score_value = 0;
+    away_score_value = 0;
     ui->home_lcd->display(QString::number(home_score_value));
     ui->away_lcd->display(QString::number(away_score_value));
 }

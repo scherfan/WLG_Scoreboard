@@ -32,68 +32,20 @@ int ctrls_home_score_value;
 QString home_team, away_team;
 bool clock_running;
 int time_value;
-QString filename = "WLG_2016_history.txt";
 
 Controls::Controls(QWidget *parent) : QMainWindow(parent), ui(new Ui::Controls)
 {
     ui->setupUi(this);
-
+    createActions();
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(show_time()));
     clock_running = false;
     ui->clock_stop->setEnabled(false);
-
-    QFile file(filename);
-    if(!file.exists())
-    {
-	qDebug() << "Doesn't exist.";
-	ctrls_home_score_value = 0;
-	ctrls_away_score_value = 0;
-	time_value = 0;
-	ui->home_score->setText(QString::number(ctrls_home_score_value));
-	ui->away_score->setText(QString::number(ctrls_away_score_value));
-    }
-    else    // If file doesn't exist then init score values, else load last score
-    {
-	qDebug() << "Exists.";
-	if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
-	{
-	    fprintf(stderr, "File IO error");
-	    exit(-1);
-	}
-	QTextStream in(&file);
-	QStringList list, last_line;
-	while(!in.atEnd())
-	{
-	    QString line = in.readLine();
-	    list.append(line);
-	}
-	file.close();
-	
-	last_line = (list.value(list.length() - 1).split(",", QString::SkipEmptyParts));
-	time_value = last_line.value(0).toInt();
-	ctrls_home_score_value = last_line.value(2).toInt();
-	ctrls_away_score_value = last_line.value(4).toInt();
-	home_team = last_line.value(1);
-	away_team = last_line.value(3);
-	
-	QString time_update;
-	int hour = (time_value / 60) / 60;
-	int minute = (time_value / 60) % 60;
-	int second = time_value % 60;
-	time_update = QString::number(hour) + ":" + QString::number(minute) + ":" + QString::number(second);
-//	emit update_clock(time_text);
-	clock_label_updated(time_update);
-	ui->home_score->setText(QString::number(ctrls_home_score_value));
-	ui->away_score->setText(QString::number(ctrls_away_score_value));
-	ui->home_label->setText(home_team + " Score");
-	ui->away_label->setText(away_team + " Score");
-//	emit home_name_changed(home_team);
-//	emit away_name_changed(away_team);
-//	emit home_score_changed(ctrls_home_score_value);
-//	emit away_score_changed(ctrls_away_score_value);
-    }
-    createActions();
+    ctrls_home_score_value = 0;
+    ctrls_away_score_value = 0;
+    time_value = 0;
+    ui->home_score->setText(QString::number(ctrls_home_score_value));
+    ui->away_score->setText(QString::number(ctrls_away_score_value));
 }
 
 Controls::~Controls()
@@ -126,19 +78,19 @@ void Controls::createActions()
     connect(ui->action_edit_away_team_score, &QAction::triggered, this, &Controls::edit_away_score);
 
     // connect score buttons
-    connect(ui->home_plus1_button, &QAbstractButton::clicked, this, [this]{update_home_score(1);});
-    connect(ui->home_minus1_button, &QAbstractButton::clicked, this, [this]{update_home_score(-1);});
-    connect(ui->home_plus2_button, &QAbstractButton::clicked, this, [this]{update_home_score(2);});
-    connect(ui->home_minus2_button, &QAbstractButton::clicked, this, [this]{update_home_score(-2);});
-    connect(ui->home_plus3_button, &QAbstractButton::clicked, this, [this]{update_home_score(3);});
-    connect(ui->home_minus3_button, &QAbstractButton::clicked, this, [this]{update_home_score(-3);});
+    connect(ui->home_plus1_button, &QAbstractButton::clicked, this, [this]{change_home_board_score(1);});
+    connect(ui->home_minus1_button, &QAbstractButton::clicked, this, [this]{change_home_board_score(-1);});
+    connect(ui->home_plus2_button, &QAbstractButton::clicked, this, [this]{change_home_board_score(2);});
+    connect(ui->home_minus2_button, &QAbstractButton::clicked, this, [this]{change_home_board_score(-2);});
+    connect(ui->home_plus3_button, &QAbstractButton::clicked, this, [this]{change_home_board_score(3);});
+    connect(ui->home_minus3_button, &QAbstractButton::clicked, this, [this]{change_home_board_score(-3);});
 
-    connect(ui->away_plus1_button, &QAbstractButton::clicked, this, [this]{update_away_score(1);});
-    connect(ui->away_minus1_button, &QAbstractButton::clicked, this, [this]{update_away_score(-1);});
-    connect(ui->away_plus2_button, &QAbstractButton::clicked, this, [this]{update_away_score(2);});
-    connect(ui->away_minus2_button, &QAbstractButton::clicked, this, [this]{update_away_score(-2);});
-    connect(ui->away_plus3_button, &QAbstractButton::clicked, this, [this]{update_away_score(3);});
-    connect(ui->away_minus3_button, &QAbstractButton::clicked, this, [this]{update_away_score(-3);});
+    connect(ui->away_plus1_button, &QAbstractButton::clicked, this, [this]{change_away_board_score(1);});
+    connect(ui->away_minus1_button, &QAbstractButton::clicked, this, [this]{change_away_board_score(-1);});
+    connect(ui->away_plus2_button, &QAbstractButton::clicked, this, [this]{change_away_board_score(2);});
+    connect(ui->away_minus2_button, &QAbstractButton::clicked, this, [this]{change_away_board_score(-2);});
+    connect(ui->away_plus3_button, &QAbstractButton::clicked, this, [this]{change_away_board_score(3);});
+    connect(ui->away_minus3_button, &QAbstractButton::clicked, this, [this]{change_away_board_score(-3);});
 
     // connect clock buttons
     connect(ui->clock_start, &QAbstractButton::clicked, this, &Controls::start_clock);
@@ -172,19 +124,19 @@ void Controls::createActions()
     away_minus_three->setKey(Qt::Key_L);
 
 
-    connect(home_plus_one, &QShortcut::activated, this, [this]{update_home_score(1);});
-    connect(home_minus_one, &QShortcut::activated, this, [this]{update_home_score(-1);});
-    connect(home_plus_two, &QShortcut::activated, this, [this]{update_home_score(2);});
-    connect(home_minus_two, &QShortcut::activated, this, [this]{update_home_score(-2);});
-    connect(home_plus_three, &QShortcut::activated, this, [this]{update_home_score(3);});
-    connect(home_minus_three, &QShortcut::activated, this, [this]{update_home_score(-3);});
+    connect(home_plus_one, &QShortcut::activated, this, [this]{change_home_board_score(1);});
+    connect(home_minus_one, &QShortcut::activated, this, [this]{change_home_board_score(-1);});
+    connect(home_plus_two, &QShortcut::activated, this, [this]{change_home_board_score(2);});
+    connect(home_minus_two, &QShortcut::activated, this, [this]{change_home_board_score(-2);});
+    connect(home_plus_three, &QShortcut::activated, this, [this]{change_home_board_score(3);});
+    connect(home_minus_three, &QShortcut::activated, this, [this]{change_home_board_score(-3);});
 
-    connect(away_plus_one, &QShortcut::activated, this, [this]{update_away_score(1);});
-    connect(away_minus_one, &QShortcut::activated, this, [this]{update_away_score(-1);});
-    connect(away_plus_two, &QShortcut::activated, this, [this]{update_away_score(2);});
-    connect(away_minus_two, &QShortcut::activated, this, [this]{update_away_score(-2);});
-    connect(away_plus_three, &QShortcut::activated, this, [this]{update_away_score(3);});
-    connect(away_minus_three, &QShortcut::activated, this, [this]{update_away_score(-3);});
+    connect(away_plus_one, &QShortcut::activated, this, [this]{change_away_board_score(1);});
+    connect(away_minus_one, &QShortcut::activated, this, [this]{change_away_board_score(-1);});
+    connect(away_plus_two, &QShortcut::activated, this, [this]{change_away_board_score(2);});
+    connect(away_minus_two, &QShortcut::activated, this, [this]{change_away_board_score(-2);});
+    connect(away_plus_three, &QShortcut::activated, this, [this]{change_away_board_score(3);});
+    connect(away_minus_three, &QShortcut::activated, this, [this]{change_away_board_score(-3);});
 
 }
 
@@ -250,9 +202,8 @@ void Controls::get_AwayTeamName()
     emit away_name_changed(name);
 }
 
-void Controls::update_home_score(int num)
+void Controls::change_home_board_score(int num)
 {
-    qDebug() << "updated home score by: " << num;
     ctrls_home_score_value += num;
     if(ctrls_home_score_value < 0)
 	ctrls_home_score_value = 0;
@@ -260,27 +211,31 @@ void Controls::update_home_score(int num)
     emit home_score_changed(ctrls_home_score_value);
 }
 
-void Controls::update_away_score(int num)
+void Controls::change_away_board_score(int num)
 {
-    qDebug() << "updated away score by: " << num;
     ctrls_away_score_value += num;
     if(ctrls_away_score_value < 0)
 	ctrls_away_score_value = 0;
     ui->away_score->setText(QString::number(ctrls_away_score_value));
     emit away_score_changed(ctrls_away_score_value);
 }
-
-/**
- * Might need these later for the pop up window
- **/
-void Controls::change_home_board_score()
+ 
+void Controls::update_home_score(int amount)
 {
-    emit home_score_changed(ctrls_home_score_value);
+    if(amount >= 0)
+    {
+	ctrls_home_score_value = amount;
+	ui->home_score->setText(QString::number(amount));
+    }
 }
 
-void Controls::change_away_board_score()
+void Controls::update_away_score(int amount)
 {
-    emit away_score_changed(ctrls_away_score_value);
+    if(amount >= 0)
+    {
+	ctrls_away_score_value = amount;
+	ui->away_score->setText(QString::number(amount));
+    }
 }
 
 void Controls::start_clock()
@@ -397,4 +352,24 @@ void Controls::edit_away_score()
 	ui->away_score->setText(QString::number(ctrls_away_score_value));
 	emit away_score_changed(ctrls_away_score_value);
     }
+}
+
+void Controls::update_time_label(QString time)
+{
+    QStringList list = time.split(":", QString::SkipEmptyParts);
+    int total = (list.value(0).toInt()) * 60 * 60;
+    total += (list.value(1).toInt()) * 60;
+    total += (list.value(2).toInt());
+    time_value = total;
+    ui->clock->setText(time);
+}
+
+void Controls::update_away_label(QString name)
+{
+    ui->away_label->setText(name);
+}
+
+void Controls::update_home_label(QString name)
+{
+    ui->home_label->setText(name);
 }

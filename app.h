@@ -29,7 +29,19 @@ class App : public QObject
 
 public:
     int run(int argc, char** argv);
-
+    
+signals:
+    void home_name_changed(QString name);
+    void away_name_changed(QString name);
+    void home_score_changed(int amount);
+    void away_score_changed(int amount);
+    void update_clock(QString time);
+    void change_time_label(QString time);
+    void change_home_score(int amount);
+    void change_away_score(int amount);
+    void change_home_label(QString name);
+    void change_away_label(QString name);
+    
 public slots:
 //    void sb_fullscreen(Scoreboard s);
 };
