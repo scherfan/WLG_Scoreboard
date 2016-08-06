@@ -44,7 +44,6 @@ signals:
     void away_name_changed(QString name);
     void home_score_changed(int amount);
     void away_score_changed(int amount);
-    void make_sb_fullscreen();
     void change_time(int time);
     void update_clock(QString time);
 
@@ -65,7 +64,6 @@ private:
     void get_HomeTeamName();
     void get_AwayTeamName();
     void closeEvent(QCloseEvent *event);
-    void sb_fullscreen();
     void edit_clock();
     void edit_home_score();
     void edit_away_score();
@@ -79,7 +77,6 @@ private:
     QMenu *fileMenu;
     QMenu *editMEnu;
     QAction *exitAct;
-    QAction *fullAct;
     QAction *editHomeTeamAct;
     QAction *editAwayTeamAct;
 };

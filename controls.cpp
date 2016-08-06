@@ -62,10 +62,6 @@ void Controls::createActions()
     ui->exitAct->setStatusTip(tr("Exit the application"));
     connect(ui->exitAct, &QAction::triggered, this, &Controls::close);
 
-    // Make scoreboard fullscreen menu
-    ui->fullAct->setStatusTip(tr("Make Scoreboard full screen"));
-    connect(ui->fullAct, &QAction::triggered, this, &Controls::sb_fullscreen);
-
     // Set time menu
     ui->action_edit_time->setStatusTip(tr("Set current time"));
     connect(ui->action_edit_time, &QAction::triggered, this, &Controls::edit_clock);
@@ -279,11 +275,6 @@ void Controls::stop_clock()
 	    ui->clock_stop->setEnabled(false);
 	}
     }
-}
-
-void Controls::sb_fullscreen()
-{
-    emit make_sb_fullscreen();
 }
 
 void Controls::clock_label_updated(QString time)

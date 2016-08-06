@@ -38,4 +38,4 @@ To do
 1. ~~Assign keybindings to score buttons~~
 1. ~~Make time editable through menu and a message box~~
 1. ~~Make changes persistant by saving time and score into a file every second~~
-1. Make scoreboard full screen after clicking menu option or Ctrl-F
+1. ~~Make scoreboard full screen on second screen if there are more than one screen~~

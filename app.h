@@ -43,9 +43,6 @@ signals:
     void change_away_score(int amount);
     void change_home_label(QString name);
     void change_away_label(QString name);
-    
-public slots:
-//    void sb_fullscreen(Scoreboard s);
 };
 
 #endif // APP_H

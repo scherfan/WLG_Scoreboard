@@ -17,6 +17,7 @@
 **/
 
 #include <QApplication>
+#include <QDesktopWidget>
 #include <QObject>
 #include <QWindow>
 #include <QDebug>
@@ -28,32 +29,32 @@
 int App::run(int argc, char** argv)
 {
     QApplication a(argc, argv);
-    Controls c;
-    Scoreboard s;
-    QObject::connect(&c, SIGNAL(home_name_changed(QString)), &s, SLOT(change_home_name(QString)));
-    QObject::connect(&c, SIGNAL(away_name_changed(QString)), &s, SLOT(change_away_name(QString)));
-    // Changes from buttons
-    QObject::connect(&c, SIGNAL(away_score_changed(int)), &s, SLOT(change_away_score(int)));
-    QObject::connect(&c, SIGNAL(home_score_changed(int)), &s, SLOT(change_home_score(int)));
+    Controls* c = new Controls;
+    Scoreboard* s = new Scoreboard;
     
-    QObject::connect(&c, SIGNAL(update_clock(QString)), &s, SLOT(set_time_value(QString)));
-    QObject::connect(&c, SIGNAL(make_sb_fullscreen()), this, SLOT(sb_fullscreen(Scoreboard s)));
+    connect(c, SIGNAL(home_name_changed(QString)), s, SLOT(change_home_name(QString)));
+    connect(c, SIGNAL(away_name_changed(QString)), s, SLOT(change_away_name(QString)));
+    // Changes from buttons
+    connect(c, SIGNAL(away_score_changed(int)), s, SLOT(change_away_score(int)));
+    connect(c, SIGNAL(home_score_changed(int)), s, SLOT(change_home_score(int)));
+    
+    connect(c, SIGNAL(update_clock(QString)), s, SLOT(set_time_value(QString)));
     
     // Connections for updating values when a file is found
-    QObject::connect(this, SIGNAL(home_name_changed(QString)), &s, SLOT(change_home_name(QString)));
-    QObject::connect(this, SIGNAL(away_name_changed(QString)), &s, SLOT(change_away_name(QString)));
+    connect(this, SIGNAL(home_name_changed(QString)), s, SLOT(change_home_name(QString)));
+    connect(this, SIGNAL(away_name_changed(QString)), s, SLOT(change_away_name(QString)));
 
-    QObject::connect(this, SIGNAL(away_score_changed(int)), &s, SLOT(change_away_score(int)));
-    QObject::connect(this, SIGNAL(home_score_changed(int)), &s, SLOT(change_home_score(int)));
+    connect(this, SIGNAL(away_score_changed(int)), s, SLOT(change_away_score(int)));
+    connect(this, SIGNAL(home_score_changed(int)), s, SLOT(change_home_score(int)));
     
-    QObject::connect(this, SIGNAL(update_clock(QString)), &s, SLOT(set_time_value(QString)));
+    connect(this, SIGNAL(update_clock(QString)), s, SLOT(set_time_value(QString)));
     
-    QObject::connect(this, SIGNAL(change_time_label(QString)), &c, SLOT(update_time_label(QString)));
-    QObject::connect(this, SIGNAL(change_home_label(QString)), &c, SLOT(update_home_label(QString)));
-    QObject::connect(this, SIGNAL(change_away_label(QString)), &c, SLOT(update_away_label(QString)));
+    connect(this, SIGNAL(change_time_label(QString)), c, SLOT(update_time_label(QString)));
+    connect(this, SIGNAL(change_home_label(QString)), c, SLOT(update_home_label(QString)));
+    connect(this, SIGNAL(change_away_label(QString)), c, SLOT(update_away_label(QString)));
 
-    QObject::connect(this, SIGNAL(change_home_score(int)), &c, SLOT(update_home_score(int)));
-    QObject::connect(this, SIGNAL(change_away_score(int)), &c, SLOT(update_away_score(int)));
+    connect(this, SIGNAL(change_home_score(int)), c, SLOT(update_home_score(int)));
+    connect(this, SIGNAL(change_away_score(int)), c, SLOT(update_away_score(int)));
     
     
 
@@ -125,16 +126,19 @@ int App::run(int argc, char** argv)
 	emit away_score_changed(away_score_value);
     }
     
-    c.show();
-    s.show();
-    
+
+
+    if(QApplication::desktop()->screenCount() > 1)
+    {
+	s->show();
+	s->windowHandle()->setScreen(qApp->screens()[1]);
+	s->showFullScreen();
+	c->show();
+    }
+    else
+    {
+	s->show();
+        c->show();
+    }
     return a.exec();
 }
-
-/**void App::sb_fullscreen(Scoreboard s)
-{
-    s.show();
-    s.windowHandle()->setScreen(qApp->screens()[1]);
-    s.showFullScreen();
-    }**/
-

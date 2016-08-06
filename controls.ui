@@ -610,8 +610,6 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="fullAct"/>
-    <addaction name="separator"/>
     <addaction name="exitAct"/>
    </widget>
    <widget class="QMenu" name="menuEdit">

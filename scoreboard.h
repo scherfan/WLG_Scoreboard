@@ -33,9 +33,6 @@ public:
     explicit Scoreboard(QWidget *parent = 0);
     ~Scoreboard();
 
-signals:
-    //void update_clock(QString);
-    
 public slots:
     void change_home_name(QString name);
     void change_away_name(QString name);
