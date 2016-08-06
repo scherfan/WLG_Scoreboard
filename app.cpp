@@ -18,6 +18,7 @@
 
 #include <QApplication>
 #include <QObject>
+#include <QWindow>
 #include <QDebug>
 #include <QFile>
 #include "controls.h"
@@ -76,15 +77,27 @@ int App::run(int argc, char** argv)
 	    list.append(line);
 	}
 	file.close();
+	QString away_team, home_team;
+	int time_value, home_score_value, away_score_value;
+	QRegExp re("^\\d*\\,[A-z]*\\,\\d*\\,[A-z]*\\,\\d*$"); // string contains a num,word,num,word,num
+
+	if(re.exactMatch(list.value(list.length() - 1)))
+	    qDebug() << "Match.";
+	else
+	{
+	    fprintf(stderr, "String pattern invalid.");
+	    exit(-1);
+	}
 	
 	last_line = (list.value(list.length() - 1).split(",", QString::SkipEmptyParts));
-	int time_value = last_line.value(0).toInt();
-	int home_score_value = last_line.value(2).toInt();
-	int away_score_value = last_line.value(4).toInt();
+
+	time_value = last_line.value(0).toInt();
+	home_score_value = last_line.value(2).toInt();
+	away_score_value = last_line.value(4).toInt();
 	qDebug() << home_score_value << away_score_value;
-	QString home_team = last_line.value(1);
-	QString away_team = last_line.value(3);
-	
+	home_team = last_line.value(1);
+	away_team = last_line.value(3);
+		    
 	QString time_update, min_text, sec_text;
 	int hour = (time_value / 60) / 60;
 	int minute = (time_value / 60) % 60;
@@ -118,8 +131,10 @@ int App::run(int argc, char** argv)
     return a.exec();
 }
 
-/*void App::sb_fullscreen(Scoreboard s)
+/**void App::sb_fullscreen(Scoreboard s)
 {
+    s.show();
+    s.windowHandle()->setScreen(qApp->screens()[1]);
     s.showFullScreen();
-}
-*/
+    }**/
+
