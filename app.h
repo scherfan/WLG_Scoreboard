@@ -23,7 +23,7 @@
 #include "scoreboard.h"
 #include <QString>
 
-const QString filename = "WLG_2016_history.txt";
+const QString filename = "WLG_2016_History.txt";
 
 class App : public QObject
 {

@@ -72,32 +72,39 @@ int App::run(int argc, char** argv)
 	}
 	QTextStream in(&file);
 	QStringList list, last_line;
+	QRegExp re("^\\d*\\,[A-z]*\\,\\d*\\,[A-z]*\\,\\d*$"); // string contains a num,word,num,word,num
 	while(!in.atEnd())
 	{
 	    QString line = in.readLine();
 	    list.append(line);
 	}
-	file.close();
-	QString away_team, home_team;
-	int time_value, home_score_value, away_score_value;
-	QRegExp re("^\\d*\\,[A-z]*\\,\\d*\\,[A-z]*\\,\\d*$"); // string contains a num,word,num,word,num
-
-	if(re.exactMatch(list.value(list.length() - 1)))
+	if(re.exactMatch(list.value(list.length() - 1)) || file.pos() == 0)
 	    qDebug() << "Match.";
 	else
 	{
 	    fprintf(stderr, "String pattern invalid.");
 	    exit(-1);
 	}
-	
-	last_line = (list.value(list.length() - 1).split(",", QString::SkipEmptyParts));
-
-	time_value = last_line.value(0).toInt();
-	home_score_value = last_line.value(2).toInt();
-	away_score_value = last_line.value(4).toInt();
-	qDebug() << home_score_value << away_score_value;
-	home_team = last_line.value(1);
-	away_team = last_line.value(3);
+	QString away_team, home_team;
+	int time_value, home_score_value, away_score_value;
+	if(file.pos() != 0)
+	{
+	    last_line = (list.value(list.length() - 1).split(",", QString::SkipEmptyParts));
+	    time_value = last_line.value(0).toInt();
+	    home_score_value = last_line.value(2).toInt();
+	    away_score_value = last_line.value(4).toInt();
+	    home_team = last_line.value(1);
+	    away_team = last_line.value(3);
+	}
+	else
+	{
+	    time_value = 0;
+	    home_score_value = 0;
+	    away_score_value = 0;
+	    home_team = "Home";
+	    away_team = "Away";
+	}
+	file.close();
 		    
 	QString time_update, min_text, sec_text;
 	int hour = (time_value / 60) / 60;
