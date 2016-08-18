@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1069</width>
-    <height>450</height>
+    <width>1271</width>
+    <height>578</height>
    </rect>
   </property>
   <property name="palette">
@@ -161,7 +161,7 @@
         <widget class="QLabel" name="home_label">
          <property name="font">
           <font>
-           <pointsize>48</pointsize>
+           <pointsize>175</pointsize>
           </font>
          </property>
          <property name="text">
@@ -179,7 +179,7 @@
         <widget class="QLabel" name="away_label">
          <property name="font">
           <font>
-           <pointsize>48</pointsize>
+           <pointsize>175</pointsize>
           </font>
          </property>
          <property name="text">
