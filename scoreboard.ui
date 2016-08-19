@@ -161,7 +161,7 @@
         <widget class="QLabel" name="home_label">
          <property name="font">
           <font>
-           <pointsize>175</pointsize>
+           <pointsize>140</pointsize>
           </font>
          </property>
          <property name="text">
@@ -179,7 +179,7 @@
         <widget class="QLabel" name="away_label">
          <property name="font">
           <font>
-           <pointsize>175</pointsize>
+           <pointsize>140</pointsize>
           </font>
          </property>
          <property name="text">
